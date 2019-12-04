@@ -1,0 +1,8 @@
+{
+    "app": "npx ts-node bin/app.ts",
+    "context": {
+        "domain": "lyraddigital.com",
+        "subdomain": "test"
+    },
+    "output": "infrastructure"
+}
