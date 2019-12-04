@@ -5,7 +5,8 @@
   "scripts": {
     "synth": "cdk synth",
     "deploy": "cdk deploy",
-    "destroy": "cdk destroy"
+    "destroy": "cdk destroy",
+    "bootstrap": "cdk bootstrap"
   },
   "keywords": [],
   "author": "",

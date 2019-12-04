@@ -4,5 +4,7 @@
         "domain": "lyraddigital.com",
         "subdomain": "test"
     },
+    "toolkitStackName": "CdkToolkitStack",
+    "toolkitBucketName": "CdkToolkit",
     "output": "infrastructure"
 }
