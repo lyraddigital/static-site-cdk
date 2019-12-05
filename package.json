@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "synth": "cdk synth",
-    "deploy": "cdk deploy",
-    "destroy": "cdk destroy",
-    "bootstrap": "cdk bootstrap"
+    "synth": "npx cdk synth --app=\"ts-node bin/app.ts\" --output \"infrastructure\"",
+    "deploy": "npx cdk deploy --app=\"ts-node bin/app.ts\" --output \"infrastructure\"",
+    "destroy": "npx cdk destroy --app=\"ts-node bin/app.ts\" --output \"infrastructure\""
   },
   "keywords": [],
   "author": "",
@@ -17,8 +16,7 @@
     "typescript": "^3.7.2"
   },
   "dependencies": {
-    "@aws-cdk/aws-s3": "^1.18.0",
-    "@aws-cdk/aws-s3-deployment": "^1.18.0",
-    "@aws-cdk/core": "^1.18.0"
+    "@aws-cdk/core": "^1.18.0",
+    "@aws-cdk/aws-s3": "^1.18.0"
   }
 }
