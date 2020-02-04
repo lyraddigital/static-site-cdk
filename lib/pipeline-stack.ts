@@ -1,6 +1,6 @@
-import { Construct, RemovalPolicy, SecretValue, Stack, StackProps } from '@aws-cdk/core';
+import { Construct, SecretValue, Stack, StackProps } from '@aws-cdk/core';
 
-import { BuildSpec, LinuxBuildImage, PipelineProject } from '@aws-cdk/aws-codebuild';
+import { BuildSpec, BuildEnvironmentVariableType, LinuxBuildImage, PipelineProject } from '@aws-cdk/aws-codebuild';
 import { Artifact, Pipeline } from '@aws-cdk/aws-codepipeline';
 import { GitHubSourceAction, CodeBuildAction } from '@aws-cdk/aws-codepipeline-actions';
 
@@ -15,11 +15,18 @@ export class PipelineStack extends Stack {
       }
     });
 
-    // const deploymentProject = new PipelineProject(this, '', {
-    //   environment: {
-    //     buildImage: LinuxBuildImage.UBUNTU_14_04_NODEJS_10_14_1
-    //   }
-    // });
+    const deploymentProject = new PipelineProject(this, '', {
+      buildSpec: BuildSpec.fromSourceFilename('build/deployAppSpec.yml'),
+      environment: {
+        buildImage: LinuxBuildImage.UBUNTU_14_04_NODEJS_10_14_1
+      },
+      environmentVariables: {
+        WEBSITE_BUCKET: {
+          type: BuildEnvironmentVariableType.PLAINTEXT,
+          value: 's3://test.lyraddigital.com' // Import this value later
+        }
+      }
+    });
 
     const sourceOutput = new Artifact();
     const buildOutput = new Artifact();
@@ -49,6 +56,16 @@ export class PipelineStack extends Stack {
               ],
               actionName: 'Build',
               project: buildProject, 
+            })
+          ]
+        },
+        {
+          stageName: 'Deploy',
+          actions: [
+            new CodeBuildAction({
+              input: buildOutput,
+              actionName: 'Deploy',
+              project: deploymentProject
             })
           ]
         }
