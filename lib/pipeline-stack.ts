@@ -2,17 +2,18 @@ import { Construct, RemovalPolicy, SecretValue, Stack, StackProps } from '@aws-c
 
 import { BuildSpec, LinuxBuildImage, PipelineProject } from '@aws-cdk/aws-codebuild';
 import { Artifact, Pipeline } from '@aws-cdk/aws-codepipeline';
-import { GitHubSourceAction, ManualApprovalAction } from '@aws-cdk/aws-codepipeline-actions';
+import { GitHubSourceAction, CodeBuildAction } from '@aws-cdk/aws-codepipeline-actions';
 
 export class PipelineStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
     
-    // const buildProject = new PipelineProject(this, 'CodeBuildCompileProject', {
-    //   environment: {
-    //     buildImage: LinuxBuildImage.UBUNTU_14_04_NODEJS_10_14_1
-    //   }
-    // });
+    const buildProject = new PipelineProject(this, 'CodeBuildCompileProject', {
+      buildSpec: BuildSpec.fromSourceFilename('build/buildAppSpec.yml'),
+      environment: {
+        buildImage: LinuxBuildImage.UBUNTU_14_04_NODEJS_10_14_1
+      }
+    });
 
     // const deploymentProject = new PipelineProject(this, '', {
     //   environment: {
@@ -21,6 +22,7 @@ export class PipelineStack extends Stack {
     // });
 
     const sourceOutput = new Artifact();
+    const buildOutput = new Artifact();
 
     new Pipeline(this, 'Pipeline', {
       stages: [
@@ -30,27 +32,27 @@ export class PipelineStack extends Stack {
             new GitHubSourceAction({
               actionName: 'Source',
               repo: 'lyraddigitalwebsite',
-              branch: 'master', // Import this value.
+              branch: 'testbranch', // Import this value.
               output: sourceOutput,
               owner: 'lyraddigital',
-              oauthToken: SecretValue.plainText('') // Import this value.
+              oauthToken: SecretValue.plainText('b2155537bd39d7fb4769aa184547b13c624a0132') // Import this value.
             })
           ]
         },
         {
           stageName: 'Build',
           actions: [
-            new ManualApprovalAction({
-              actionName: "Approve"
+            new CodeBuildAction({
+              input: sourceOutput,
+              outputs: [
+                buildOutput
+              ],
+              actionName: 'Build',
+              project: buildProject, 
             })
           ]
         }
       ]
     });
-
-    /*
-    ,
-        
-    */
   }
 }
