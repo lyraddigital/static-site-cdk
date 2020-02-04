@@ -18,7 +18,7 @@ export class WebsiteStack extends Stack {
       removalPolicy: RemovalPolicy.DESTROY
     });
 
-    new BucketDeployment(this, 'DeployFilesToBucket', {
+    new BucketDeployment(this, 'DeployWebsite', {
       sources: [Source.asset('src')],
       destinationBucket: websiteBucket
     });
