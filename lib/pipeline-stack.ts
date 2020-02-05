@@ -1,3 +1,4 @@
+import { PolicyStatement } from '@aws-cdk/aws-iam';
 import { Construct, SecretValue, Stack, StackProps } from '@aws-cdk/core';
 
 import { BuildSpec, BuildEnvironmentVariableType, LinuxBuildImage, PipelineProject } from '@aws-cdk/aws-codebuild';
@@ -15,7 +16,18 @@ export class PipelineStack extends Stack {
       }
     });
 
-    const deploymentProject = new PipelineProject(this, '', {
+    const deployCodePolicyStatementOne = new PolicyStatement();
+    deployCodePolicyStatementOne.addAllResources();
+    deployCodePolicyStatementOne.addActions('s3:ListBucket');
+
+    const deployCodePolicyStatementTwo = new PolicyStatement();
+    deployCodePolicyStatementTwo.addResources('arn:aws:s3:::test.lyraddigital.com/*');
+    deployCodePolicyStatementTwo.addActions('s3:PutObject', 's3:PutObjectAcl', 's3:DeleteObject');
+
+    const sourceOutput = new Artifact();
+    const buildOutput = new Artifact();
+
+    const deploymentProject = new PipelineProject(this, 'CodeBuildDeploymentProject', {
       buildSpec: BuildSpec.fromSourceFilename('build/deployAppSpec.yml'),
       environment: {
         buildImage: LinuxBuildImage.UBUNTU_14_04_NODEJS_10_14_1
@@ -28,8 +40,8 @@ export class PipelineStack extends Stack {
       }
     });
 
-    const sourceOutput = new Artifact();
-    const buildOutput = new Artifact();
+    deploymentProject.addToRolePolicy(deployCodePolicyStatementOne);
+    deploymentProject.addToRolePolicy(deployCodePolicyStatementTwo);
 
     new Pipeline(this, 'Pipeline', {
       stages: [
