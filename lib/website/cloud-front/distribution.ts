@@ -19,7 +19,7 @@ export class Distribution extends Construct {
         });
 
         // Creating the Distribution
-        this.instance = new CloudFrontWebDistribution(this, 'SiteDistribution', {
+        this.instance = new CloudFrontWebDistribution(this, 'WebsiteDistribution', {
             aliasConfiguration: {
                 acmCertRef: certificate.certificateArn,
                 names: [ props.domainName ],
