@@ -1,4 +1,4 @@
-export interface SiteDomainProps {
+export interface DomainSettings {
     rootDomain: string;
     subDomain: string;
 }

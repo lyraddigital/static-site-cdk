@@ -1,7 +1,7 @@
 import { Construct } from '@aws-cdk/core';
 import { BucketDeployment, Source } from '@aws-cdk/aws-s3-deployment';
 
-import { SiteDeploymentProps } from './props/site-deployment-props';
+import { SiteDeploymentProps } from './site-deployment-props';
 
 export class WebsiteDeployment extends Construct {
     constructor(parent: Construct, id: string, props: SiteDeploymentProps) {
