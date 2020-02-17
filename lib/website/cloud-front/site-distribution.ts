@@ -3,13 +3,13 @@ import { HostedZone } from '@aws-cdk/aws-route53';
 import { DnsValidatedCertificate } from '@aws-cdk/aws-certificatemanager';
 import { CloudFrontWebDistribution, SecurityPolicyProtocol, SSLMethod } from '@aws-cdk/aws-cloudfront';
 
-import { DistributionProps } from './distribution-props';
+import { SiteDistributionProps } from './site-distribution-props';
 import { DomainSettingsService } from '../common/domain-settings.service';
 
-export class Distribution extends Construct {
+export class SiteDistribution extends Construct {
     public instance: CloudFrontWebDistribution;
 
-    constructor(parent: Construct, id: string, props: DistributionProps) {
+    constructor(parent: Construct, id: string, props: SiteDistributionProps) {
         super(parent, id);
 
         const domainSettings = DomainSettingsService.getSettingsFromContext(this);
