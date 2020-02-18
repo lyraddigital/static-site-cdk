@@ -1,24 +1,26 @@
 import { PolicyStatement } from '@aws-cdk/aws-iam';
 import { Construct, SecretValue, Stack, StackProps } from '@aws-cdk/core';
-
 import { BuildSpec, BuildEnvironmentVariableType, LinuxBuildImage, PipelineProject } from '@aws-cdk/aws-codebuild';
 import { Artifact, Pipeline } from '@aws-cdk/aws-codepipeline';
 import { GitHubSourceAction, CodeBuildAction } from '@aws-cdk/aws-codepipeline-actions';
+import { Bucket } from '@aws-cdk/aws-s3';
+
+import { BuildProject } from './actions/build/build-project';
 
 export class PipelineStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
     
-    const buildProject = new PipelineProject(this, 'CodeBuildCompileProject', {
-      buildSpec: BuildSpec.fromSourceFilename('build/buildAppSpec.yml'),
-      environment: {
-        buildImage: LinuxBuildImage.UBUNTU_14_04_NODEJS_10_14_1
-      }
-    });
+    const buildProject = new BuildProject(this, 'BuildProject');
 
     const deployCodePolicyStatementOne = new PolicyStatement();
     deployCodePolicyStatementOne.addAllResources();
     deployCodePolicyStatementOne.addActions('s3:ListBucket');
+
+    const bucketName = 'test.lyraddigital.com'; // Import later
+    const bucket = Bucket.fromBucketAttributes(this, 'WebsiteBucket', {
+      bucketArn: `arn:aws:s3:::${bucketName}`
+    });
 
     const deployCodePolicyStatementTwo = new PolicyStatement();
     deployCodePolicyStatementTwo.addResources('arn:aws:s3:::test.lyraddigital.com/*');
@@ -39,6 +41,10 @@ export class PipelineStack extends Stack {
         }
       }
     });
+
+    
+    bucket.grantPut(deploymentProject);
+    bucket.grantDelete(deploymentProject);
 
     deploymentProject.addToRolePolicy(deployCodePolicyStatementOne);
     deploymentProject.addToRolePolicy(deployCodePolicyStatementTwo);
@@ -67,7 +73,7 @@ export class PipelineStack extends Stack {
                 buildOutput
               ],
               actionName: 'Build',
-              project: buildProject, 
+              project: buildProject.project, 
             })
           ]
         },
