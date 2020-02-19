@@ -7,8 +7,8 @@ export class DomainSettingsService {
         const stack = Stack.of(scope);
 
         return {
-            rootDomain: stack.node.tryGetContext('subdomain'),
-            subDomain: stack.node.tryGetContext('domain')
+            rootDomain: stack.node.tryGetContext('domain'),
+            subDomain: stack.node.tryGetContext('subdomain')
           };
     }
 }
