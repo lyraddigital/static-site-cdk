@@ -5,3 +5,4 @@ package-lock.json
 
 # CDK
 infrastructure
+cdk.context.json
