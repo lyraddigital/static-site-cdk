@@ -1,10 +1,10 @@
 import { Construct, RemovalPolicy } from '@aws-cdk/core';
-import { Bucket } from '@aws-cdk/aws-s3';
+import { Bucket, IBucket } from '@aws-cdk/aws-s3';
 
 import { DomainSettingsService } from '../common/domain-settings.service';
 
 export class SiteBucket extends Construct {
-    public instance: Bucket;
+    public readonly instance: IBucket;
 
     constructor(parent: Construct, id: string) {
         super(parent, id);

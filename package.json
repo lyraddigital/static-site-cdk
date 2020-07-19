@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "description": "This is a cdk project that will be used to deploy static websites to S3 and have it run via Cloudfront",
   "scripts": {
-    "synth": "cdk synth"
+    "synth": "cdk synth",
+    "test": "jest"
   },
   "keywords": [],
   "author": "Lyrad Digital",
   "license": "ISC",
   "devDependencies": {
+    "@aws-cdk/assert": "^1.52.0",
+    "@types/jest": "^25.2.3",
     "@types/node": "^14.0.23",
     "aws-cdk": "^1.52.0",
+    "jest": "^25.5.4",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   },
@@ -24,5 +28,10 @@
     "@aws-cdk/aws-s3": "^1.52.0",
     "@aws-cdk/aws-s3-deployment": "^1.52.0",
     "@aws-cdk/core": "^1.52.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js"
+    ]
   }
 }
