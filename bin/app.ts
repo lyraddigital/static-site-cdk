@@ -1,7 +1,6 @@
 import cdk = require('@aws-cdk/core');
 
-import { WebsiteStack } from '../lib/website/website-stack';
-import { PipelineStack } from '../lib/pipeline/pipeline-stack';
+import { WebsiteStack } from '../lib/website-stack';
 
 const app = new cdk.App();
 new WebsiteStack(app, 'WebsiteStack', { 
@@ -10,5 +9,3 @@ new WebsiteStack(app, 'WebsiteStack', {
         region: process.env.CDK_DEFAULT_REGION
     }
 });
-
-//new PipelineStack(app, 'PipelineStack');

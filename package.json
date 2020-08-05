@@ -1,37 +1,26 @@
 {
-  "name": "static-site-cdk",
+  "name": "lifeready-angular-infrastructure",
   "version": "1.0.0",
-  "description": "This is a cdk project that will be used to deploy static websites to S3 and have it run via Cloudfront",
+  "description": "This is a cdk project that will be used to deploy the Lifeready Angular website using S3 and Cloudfront, with Route53 management",
   "scripts": {
-    "synth": "cdk synth",
-    "test": "jest"
+    "synth": "cdk synth"
   },
   "keywords": [],
-  "author": "Lyrad Digital",
+  "author": "Roadhouse",
   "license": "ISC",
   "devDependencies": {
-    "@aws-cdk/assert": "^1.52.0",
-    "@types/jest": "^25.2.3",
-    "@types/node": "^14.0.23",
-    "aws-cdk": "^1.52.0",
-    "jest": "^25.5.4",
+    "@types/node": "^14.0.27",
+    "aws-cdk": "^1.56.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "@aws-cdk/aws-certificatemanager": "^1.52.0",
-    "@aws-cdk/aws-cloudfront": "^1.52.0",
-    "@aws-cdk/aws-codebuild": "^1.52.0",
-    "@aws-cdk/aws-codepipeline": "^1.52.0",
-    "@aws-cdk/aws-codepipeline-actions": "^1.52.0",
-    "@aws-cdk/aws-route53": "^1.52.0",
-    "@aws-cdk/aws-s3": "^1.52.0",
-    "@aws-cdk/aws-s3-deployment": "^1.52.0",
-    "@aws-cdk/core": "^1.52.0"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js"
-    ]
+    "@aws-cdk/aws-certificatemanager": "^1.56.0",
+    "@aws-cdk/aws-cloudfront": "^1.56.0",
+    "@aws-cdk/aws-route53": "^1.56.0",
+    "@aws-cdk/aws-route53-targets": "^1.56.0",
+    "@aws-cdk/aws-s3": "^1.56.0",
+    "@aws-cdk/aws-s3-deployment": "^1.56.0",
+    "@aws-cdk/core": "^1.56.0"
   }
 }
